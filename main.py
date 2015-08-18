@@ -7,10 +7,10 @@ class Tarjeta:
 
     
     def Recarga (self, monto):
-        if monto = 196:
+        if monto == 196:
             self._Saldo = self._Saldo + 230
         else:
-            if monto = 368:
+            if monto == 368:
                 self._Saldo = self._Saldo + 460
             else:
                 self._Saldo = self._Saldo + monto
@@ -25,13 +25,22 @@ class Tarjeta:
 
     
     def PagarBoleto (self, colectivo, horario):
-        
-        
+        if self._Saldo > 5.90:
+            self._Saldo = self._Saldo - 5.90
+            self._Viaje.setValores (colectivo, horario, 5.90)
+            self._Registro.append (self._Viaje)
+            print("Pasaste\n")
+            return True
+        else:
+            print("No Pasaste\n")
+            return False
 
 
 class TarjetaMedioBoleto (Tarjeta) :
         
     def PagarBoleto (self, colectivo, horario):
+        print ("Still under development")
+        return True
         #SI EL HORARIO ESTA FUERA DEL RANGO, PAGA COMUN
         #ELSE PAGA DESCONTADO
 
