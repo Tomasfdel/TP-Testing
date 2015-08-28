@@ -19,19 +19,30 @@ class Tarjeta:
 
     def PagarBoleto (self, colectivo, horario):
         if self.ExistenViajes:
-            UltimoViaje = self._Registro[:-1]
-            
-            
+            UltimoViaje = self._Registro[-1]
+            if UltimoViaje._Monto != self._CostoTransbordo:
+                if UltimoViaje._Linea != colectivo._Linea:
+                    FechaVieja = UltimoViaje._Horario[0:9]
+                    FechaActual = horario[0:9]
+                    if FechaVieja == FechaActual:
+                        #ACA VA LA COSA DE LAS HORAS
+                        return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)
+        
+        return self.PagarConCosto(colectivo, horario, self._CostoComun)
+        
+        
+                
+    def PagarConCosto (self, colectivo, horario, costo):
+        if self._Saldo > costo:
+            self._Saldo = self._Saldo - costo
+            self._Viaje.setValores (colectivo, horario, costo)
+            self._Registro.append(self._Viaje)
+            print("Pasaste\n")
+            return True
         else:
-            if self._Saldo > self_CostoComun:
-                self._Saldo = self._Saldo - self._CostoComun
-                self._Viaje.setValores (colectivo, horario, self._CostoComun)
-                self._Registro.append(self._Viaje)
-                print("Pasaste\n")
-                return True
-            else:
-                print("No Pasaste\n")
-                return False
+            print("No Pasaste\n")
+            return False
+    
 
     def Saldo (self):
         return self._Saldo
