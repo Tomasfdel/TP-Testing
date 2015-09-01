@@ -129,11 +129,95 @@ class Tarjeta:
 
 
 class TarjetaMedioBoleto (Tarjeta) :
+    
+    def __init__ (self):
+        self._Saldo = 0
+        self._Registro= []
+        self._Viaje = Viaje()
+        self._CostoComun = 5.75
+        self._CostoTransbordo = 1.90
+        self._CostoMedioComun = 2.90
+        self._CostoMedioTransbordo = 0.96
+    
     def PagarBoleto (self, colectivo, horario):
-        print ("Still under development")
-        return True
-        #SI EL HORARIO ESTA FUERA DEL RANGO, PAGA COMUN
-        #ELSE PAGA DESCONTADO
+        if self.ExistenViajes:
+            UltimoViaje = self._Registro[-1]
+            if UltimoViaje._Monto != self._CostoTransbordo and UltimoViaje._Monto != self._CostoMedioTransbordoTransbordo:
+                if UltimoViaje._Linea != colectivo._Linea:
+                    if UltimoViaje._Horario[0:9] == horario[0:9]:
+                        
+                        HoraVieja=int(UltimoViaje._Horario[11:12]) + 1
+                        MinutoViejo=int(UltimoViaje._Horario[14:15])
+                        SegundoViejo=int(UltimoViaje._Horario[17:18])
+                      
+                        HoraNueva=int(horario[11:12])
+                        MinutoNuevo=int(horario[14:15])
+                        SegundoNuevo=int(horario[17:18])
+                        
+                        if HoraNueva > HoraVieja:
+                            return self.PagarConCosto(colectivo, horario, self._CostoComun)
+                        if HoraNueva < HoraVieja:
+                            return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)        
+                        
+                        
+                        if MinutoNuevo > MinutoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoComun)
+                        if MinutoNuevo < MinutoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
+                        
+                        
+                        if SegundoNuevo > SegundoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoComun)
+                        if SegundoNuevo <= SegundoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
+                        
+                    
+                    if int(UltimoViaje._Horario[9:10]) == 23 and TestearFecha(UltimoViaje._Horario,horario):
+                        HoraVieja= 0
+                        MinutoViejo=int(UltimoViaje._Horario[14:15])
+                        SegundoViejo=int(UltimoViaje._Horario[17:18])
+                      
+                        HoraNueva=int(horario[11:12])
+                        MinutoNuevo=int(horario[14:15])
+                        SegundoNuevo=int(horario[17:18])
+                        
+                        if HoraNueva > HoraVieja:
+                            return self.PagarConCosto(colectivo, horario, self._CostoComun)
+                        
+                        if MinutoNuevo > MinutoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoComun)
+                        if MinutoNuevo < MinutoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
+                        
+                        
+                        if SegundoNuevo > SegundoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoComun)
+                        if SegundoNuevo <= SegundoViejo:
+                            return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)  
+            
+        
+        return self.PagarConCosto(colectivo, horario, self._CostoComun)
+
+    
+    def PagarConCosto (self, colectivo, horario, costo):
+        if int(horario[11:12]) >= 0 and int(horario[11:12]) < 6:
+            if costo == self._CostoComun:
+                costo = self._CostoMedioComun
+            else:
+                costo = self._CostoMedioTransbordo
+            
+        
+        if self._Saldo > costo:
+            self._Saldo = self._Saldo - costo
+            self._Viaje.setValores (colectivo, horario, costo)
+            self._Registro.append(self._Viaje)
+            print("Pasaste\n")
+            return True
+        else:
+            print("No Pasaste\n")
+            return False
+
+
 
 
 
