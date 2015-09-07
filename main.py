@@ -1,10 +1,8 @@
-#"01/34/6789 12:45:78"
 class Tarjeta:
     
     def __init__ (self):
         self._Saldo = 0
         self._Registro= []
-        self._Viaje = Viaje()
         self._CostoComun = 5.75
         self._CostoTransbordo = 1.90
         
@@ -19,15 +17,14 @@ class Tarjeta:
 
 
     def PagarBoleto (self, colectivo, horario):
-        if self.ExistenViajes:
-            UltimoViaje = self._Registro[-1]
-            if UltimoViaje._Monto != self._CostoTransbordo:
-                if UltimoViaje._Linea != colectivo._Linea:
-                    if UltimoViaje._Horario[0:9] == horario[0:9]:
+        if self.Viajes():
+            if (self._Registro[-1])._Monto != self._CostoTransbordo:
+                if (self._Registro[-1])._Colectivo._Linea != colectivo._Linea:
+                    if (self._Registro[-1])._Horario[0:9] == horario[0:9]:
                         
-                        HoraVieja=int(UltimoViaje._Horario[11:12]) + 1
-                        MinutoViejo=int(UltimoViaje._Horario[14:15])
-                        SegundoViejo=int(UltimoViaje._Horario[17:18])
+                        HoraVieja=int((self._Registro[-1])._Horario[11:12]) + 1
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
                       
                         HoraNueva=int(horario[11:12])
                         MinutoNuevo=int(horario[14:15])
@@ -51,10 +48,10 @@ class Tarjeta:
                             return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
                         
                     
-                    if int(UltimoViaje._Horario[9:10]) == 23 and TestearFecha(UltimoViaje._Horario,horario):
+                    if int((self._Registro[-1])._Horario[9:10]) == 23 and TestearFecha((self._Registro[-1])._Horario,horario):
                         HoraVieja= 0
-                        MinutoViejo=int(UltimoViaje._Horario[14:15])
-                        SegundoViejo=int(UltimoViaje._Horario[17:18])
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
                       
                         HoraNueva=int(horario[11:12])
                         MinutoNuevo=int(horario[14:15])
@@ -66,9 +63,9 @@ class Tarjeta:
                         if MinutoNuevo > MinutoViejo:
                             return self.PagarConCosto(colectivo, horario, self._CostoComun)
                         if MinutoNuevo < MinutoViejo:
-                            return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
-                        
-                        
+                            return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)
+                            
+                            
                         if SegundoNuevo > SegundoViejo:
                             return self.PagarConCosto(colectivo, horario, self._CostoComun)
                         if SegundoNuevo <= SegundoViejo:
@@ -82,8 +79,7 @@ class Tarjeta:
     def PagarConCosto (self, colectivo, horario, costo):
         if self._Saldo > costo:
             self._Saldo = self._Saldo - costo
-            self._Viaje.setValores (colectivo, horario, costo)
-            self._Registro.append(self._Viaje)
+            (self._Registro).append(Viaje(colectivo, horario, costo))
             print("Pasaste\n")
             return True
         else:
@@ -119,11 +115,8 @@ class Tarjeta:
     def ViajesRealizados (self):
         return self._Registro
 
-    def ExistenViajes (self):
-        if len(self._Registro) > 0:
-            return True
-        else:
-            return False
+    def Viajes (self):
+        return len(self._Registro)
         
 
 
@@ -133,22 +126,20 @@ class TarjetaMedioBoleto (Tarjeta) :
     def __init__ (self):
         self._Saldo = 0
         self._Registro= []
-        self._Viaje = Viaje()
         self._CostoComun = 5.75
         self._CostoTransbordo = 1.90
         self._CostoMedioComun = 2.90
         self._CostoMedioTransbordo = 0.96
     
     def PagarBoleto (self, colectivo, horario):
-        if self.ExistenViajes:
-            UltimoViaje = self._Registro[-1]
-            if UltimoViaje._Monto != self._CostoTransbordo and UltimoViaje._Monto != self._CostoMedioTransbordoTransbordo:
-                if UltimoViaje._Linea != colectivo._Linea:
-                    if UltimoViaje._Horario[0:9] == horario[0:9]:
+        if self.Viajes():
+            if (self._Registro[-1])._Monto != self._CostoTransbordo and (self._Registro[-1])._Monto != self._CostoMedioTransbordoTransbordo:
+                if (self._Registro[-1])._Linea != colectivo._Linea:
+                    if (self._Registro[-1])._Horario[0:9] == horario[0:9]:
                         
-                        HoraVieja=int(UltimoViaje._Horario[11:12]) + 1
-                        MinutoViejo=int(UltimoViaje._Horario[14:15])
-                        SegundoViejo=int(UltimoViaje._Horario[17:18])
+                        HoraVieja=int((self._Registro[-1])._Horario[11:12]) + 1
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
                       
                         HoraNueva=int(horario[11:12])
                         MinutoNuevo=int(horario[14:15])
@@ -172,10 +163,10 @@ class TarjetaMedioBoleto (Tarjeta) :
                             return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
                         
                     
-                    if int(UltimoViaje._Horario[9:10]) == 23 and TestearFecha(UltimoViaje._Horario,horario):
+                    if int((self._Registro[-1])._Horario[9:10]) == 23 and TestearFecha((self._Registro[-1])._Horario,horario):
                         HoraVieja= 0
-                        MinutoViejo=int(UltimoViaje._Horario[14:15])
-                        SegundoViejo=int(UltimoViaje._Horario[17:18])
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
                       
                         HoraNueva=int(horario[11:12])
                         MinutoNuevo=int(horario[14:15])
@@ -209,8 +200,7 @@ class TarjetaMedioBoleto (Tarjeta) :
         
         if self._Saldo > costo:
             self._Saldo = self._Saldo - costo
-            self._Viaje.setValores (colectivo, horario, costo)
-            self._Registro.append(self._Viaje)
+            self._Registro.append(Viaje(colectivo, horario, costo))
             print("Pasaste\n")
             return True
         else:
@@ -229,10 +219,17 @@ class Colectivo:
 
 
 class Viaje:
-    def __init__ (self):
-        self.setValores(0,0,0)
-
-    def setValores (self, colectivo, horario, monto):
+    def __init__ (self, colectivo, horario, monto):
         self._Colectivo = colectivo
         self._Horario = horario
-        self._Monto = monto
+        self._Monto = monto       
+        
+
+
+
+
+cole = Colectivo("Semtur", 153, 1)
+tarj = Tarjeta()
+tarj.Recarga(12)
+tarj.PagarBoleto(cole,"01/01/2015 10:00:01")
+tarj.PagarBoleto(cole,"01/01/2015 10:15:59")
