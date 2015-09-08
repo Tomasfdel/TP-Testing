@@ -188,7 +188,7 @@ class TarjetaMedioBoleto (Tarjeta) :
 
     
     def PagarConCosto (self, colectivo, horario, costo):
-        if int(horario[11:13]) >= 0 and int(horario[11:13]) < 6:
+        if int(horario[11:13]) >= 6:
             if costo == self._CostoComun:
                 costo = self._CostoMedioComun
             else:
