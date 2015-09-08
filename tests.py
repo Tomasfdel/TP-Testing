@@ -13,7 +13,6 @@ def test1():
 	tarj1.PagarBoleto(cole1,"07/09/2015 17:58:01")
 	tarj1.PagarBoleto(cole1,"07/09/2015 18:30:00")
 	assert tarj1._Saldo == 688.50
-	print("Test 1 Done")
    
 
 #Revisa el transbordo en una Tarjeta Medio Boleto, con una hora fuera de su horario de costo reducido.
@@ -23,9 +22,9 @@ def test2():
 	bondi21=Colectivo("Mixta", 101, 3)
 	bondi22=Colectivo("Mixta", 102, 2)
 	tarj2.PagarBoleto(bondi21,"03/06/1997 05:30:00")
+	assert tarj2._Saldo == 14.25
 	tarj2.PagarBoleto(bondi22,"03/06/1997 06:10:00")
 	assert tarj2._Saldo == 13.29
-	print("Test 2 Done")
 	
 
 #Revisa un transbordo con días de fechas, mes y año distinto. Luego se fija si no se puede subir a otro
@@ -40,7 +39,6 @@ def test3():
 	tarj3.PagarBoleto(bondi32,"01/01/2011 00:15:00")
 	assert tarj3._Saldo == 5.35
 	assert tarj3.PagarBoleto(bondi33,"01/01/2011 00:30:00") == False
-	print("Test 3 Done")
 	
 
 #Revisa que si después de subir a un primer colectivo, te subas a otro igual sin tener saldo suficiente,
@@ -54,7 +52,6 @@ def test4():
 	assert tarj4.PagarBoleto(bondi41,"23/05/2010 18:40:00") == False
 	tarj4.PagarBoleto(bondi42,"23/05/2010 18:41:00")
 	assert tarj4._Saldo == 2.35
-	print("Test 4 Done")
 	
 
 
@@ -65,7 +62,7 @@ def test5():
 	bondi51=Colectivo("Mixta",101, 3)
 	bondi52=Colectivo("Mixta",106, 3)
 	tarj5.PagarBoleto(bondi51,"09/12/2014 10:45:00")
-	tarj5.PagarBoleto(bondi52,"09/12/2014 12:15:00")
+	tarj5.PagarBoleto(bondi52,"09/12/2014 11:15:00")
 	Lista=tarj5.ViajesRealizados()
 	assert Lista[0]._Colectivo == bondi51
 	assert Lista[0]._Horario == "09/12/2014 10:45:00"
@@ -73,4 +70,3 @@ def test5():
 	assert Lista[1]._Colectivo == bondi52
 	assert Lista[1]._Horario == "09/12/2014 12:15:00"
 	assert Lista[1]._Monto == 1.90
-	print("Test 5 Done")
