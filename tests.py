@@ -1,5 +1,5 @@
 from main import *
-
+print("Starting tests")
 #Revisa si se carga saldo EXTRA y que si se sube dos veces al mismo colectivo no cobre transbordo.
 def test1(): 
    tarj1=Tarjeta()
@@ -69,3 +69,4 @@ def test5():
 	assert Lista[1]._Colectivo == bondi52
 	assert Lista[1]._Horario == "09/12/2014 12:15:00"
 	assert Lista[1]._Monto == 1.90
+ print("Tests finished")
