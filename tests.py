@@ -18,7 +18,7 @@ def test_DosViajesIguales():
 	bondi21=Colectivo("Mixta", 101, 3)
 	tarj2.PagarBoleto(bondi21,"03/06/1997 05:30:00")
 	assert tarj2._Saldo == 14.25
-	tarj2.PagarBoleto(bondi22,"03/06/1997 05:30:10")
+	tarj2.PagarBoleto(bondi21,"03/06/1997 05:30:10")
 	assert tarj2._Saldo == 8.50
 	
 #Verifica el funcionamiento del transbordo.	
@@ -38,9 +38,9 @@ def test_SinSaldo():
 	tarj4.Recarga(10)
 	bondi41=Colectivo("Semtur", 132, 3)
 	tarj4.PagarBoleto(bondi41,"10/06/2015 23:30:00")
-	assert tarj2._Saldo == 4.25
-	assert tarj2.PagarBoleto(bondi41,"10/06/2015 23:40:00") == False
-	assert tarj2._Saldo == 4.25
+	assert tarj4._Saldo == 4.25
+	assert tarj4.PagarBoleto(bondi41,"10/06/2015 23:40:00") == False
+	assert tarj4._Saldo == 4.25
 
 #Verifica que se pueda tomar un colectivo de distinta linea al anterior pero no de la misma en caso de tener saldo suficiente
 # para un viaje transbordo pero no para uno comun.
