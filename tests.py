@@ -11,6 +11,7 @@ def test1():
 	assert tarj1._Saldo == 700
 	cole1 = Colectivo("Semtur", 153, 1)
 	tarj1.PagarBoleto(cole1,"07/09/2015 17:58:01")
+	assert tarj1._Saldo == 694.25
 	tarj1.PagarBoleto(cole1,"07/09/2015 18:30:00")
 	assert tarj1._Saldo == 688.50
    
@@ -36,6 +37,7 @@ def test3():
 	bondi32=Colectivo("Mixta",102, 3)
 	bondi33=Colectivo("Mixta",103, 3)
 	tarj3.PagarBoleto(bondi31,"31/12/2010 23:45:00")
+	assert tarj3._Saldo == 7.25
 	tarj3.PagarBoleto(bondi32,"01/01/2011 00:15:00")
 	assert tarj3._Saldo == 5.35
 	assert tarj3.PagarBoleto(bondi33,"01/01/2011 00:30:00") == False
@@ -49,6 +51,7 @@ def test4():
 	bondi41=Colectivo("Mixta",101, 3)
 	bondi42=Colectivo("Mixta",106, 3)
 	tarj4.PagarBoleto(bondi41,"23/05/2010 17:45:00")
+	assert tarj4._Saldo == 4.25
 	assert tarj4.PagarBoleto(bondi41,"23/05/2010 18:40:00") == False
 	tarj4.PagarBoleto(bondi42,"23/05/2010 18:41:00")
 	assert tarj4._Saldo == 2.35
