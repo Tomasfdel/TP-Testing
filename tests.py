@@ -1,4 +1,4 @@
-import main.py
+from main import *
 
 #Revisa si se carga saldo EXTRA y que si se sube dos veces al mismo colectivo no cobre transbordo.
 def test1(): 
