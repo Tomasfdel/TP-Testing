@@ -2,18 +2,18 @@ from main import *
 
 #Revisa si se carga saldo EXTRA y que si se sube dos veces al mismo colectivo no cobre transbordo.
 def test1(): 
-   tarj1=Tarjeta()
-   tarj1.Recarga(196)
-   assert tarj1._Saldo == 230
-   tarj1.Recarga(368)
-   assert tarj1._Saldo == 690
-   tarj1.Recarga(10)
-   assert tarj1._Saldo == 700
-   cole1 = Colectivo("Semtur", 153, 1)
-   tarj1.PagarBoleto(cole1,"07/09/2015 17:58:01")
-   tarj1.PagarBoleto(cole1,"07/09/2015 18:30:00")
-   assert tarj1._Saldo == 688.50
-   print("Test 1 Done")
+	tarj1=Tarjeta()
+	tarj1.Recarga(196)
+	assert tarj1._Saldo == 230
+	tarj1.Recarga(368)
+	assert tarj1._Saldo == 690
+	tarj1.Recarga(10)
+	assert tarj1._Saldo == 700
+	cole1 = Colectivo("Semtur", 153, 1)
+	tarj1.PagarBoleto(cole1,"07/09/2015 17:58:01")
+	tarj1.PagarBoleto(cole1,"07/09/2015 18:30:00")
+	assert tarj1._Saldo == 688.50
+	print("Test 1 Done")
    
 
 #Revisa el transbordo en una Tarjeta Medio Boleto, con una hora fuera de su horario de costo reducido.
