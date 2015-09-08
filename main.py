@@ -20,15 +20,14 @@ class Tarjeta:
         if self.Viajes():
             if (self._Registro[-1])._Monto != self._CostoTransbordo:
                 if (self._Registro[-1])._Colectivo._Linea != colectivo._Linea:
-                    if (self._Registro[-1])._Horario[0:9] == horario[0:9]:
-                        
-                        HoraVieja=int((self._Registro[-1])._Horario[11:12]) + 1
-                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
-                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
+                    if (self._Registro[-1])._Horario[0:10] == horario[0:10]:
+                        HoraVieja=int((self._Registro[-1])._Horario[11:13]) + 1
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:16])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:19])
                       
-                        HoraNueva=int(horario[11:12])
-                        MinutoNuevo=int(horario[14:15])
-                        SegundoNuevo=int(horario[17:18])
+                        HoraNueva=int(horario[11:13])
+                        MinutoNuevo=int(horario[14:16])
+                        SegundoNuevo=int(horario[17:19])
                         
                         if HoraNueva > HoraVieja:
                             return self.PagarConCosto(colectivo, horario, self._CostoComun)
@@ -47,15 +46,16 @@ class Tarjeta:
                         if SegundoNuevo <= SegundoViejo:
                             return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
                         
-                    
-                    if int((self._Registro[-1])._Horario[9:10]) == 23 and TestearFecha((self._Registro[-1])._Horario,horario):
+                        
+                    HoraVieja=int((self._Registro[-1])._Horario[11:13])
+                    if HoraVieja == 23 and self.TestearFecha((self._Registro[-1])._Horario,horario):
                         HoraVieja= 0
-                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
-                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:16])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:19])
                       
-                        HoraNueva=int(horario[11:12])
-                        MinutoNuevo=int(horario[14:15])
-                        SegundoNuevo=int(horario[17:18])
+                        HoraNueva=int(horario[11:13])
+                        MinutoNuevo=int(horario[14:16])
+                        SegundoNuevo=int(horario[17:19])
                         
                         if HoraNueva > HoraVieja:
                             return self.PagarConCosto(colectivo, horario, self._CostoComun)
@@ -80,21 +80,19 @@ class Tarjeta:
         if self._Saldo > costo:
             self._Saldo = self._Saldo - costo
             (self._Registro).append(Viaje(colectivo, horario, costo))
-            print("Pasaste\n")
             return True
         else:
-            print("No Pasaste\n")
             return False
     
     
     def TestearFecha (self, HorarioViejo, horario):
-        DiaViejo=int(HorarioViejo[0:1])
-        MesViejo=int(HorarioViejo[3:4])
-        AnoViejo=int(HorarioViejo[6:9])
+        DiaViejo=int(HorarioViejo[0:2])
+        MesViejo=int(HorarioViejo[3:5])
+        AnoViejo=int(HorarioViejo[6:10])
                       
-        DiaNuevo=int(horario[0:1])
-        MesNuevo=int(horario[3:4])
-        AnoNuevo=int(horario[6:9])
+        DiaNuevo=int(horario[0:2])
+        MesNuevo=int(horario[3:5])
+        AnoNuevo=int(horario[6:10])
         
         if DiaViejo+1 == DiaNuevo and MesViejo == MesNuevo and AnoViejo == AnoNuevo:
             return True
@@ -133,17 +131,16 @@ class TarjetaMedioBoleto (Tarjeta) :
     
     def PagarBoleto (self, colectivo, horario):
         if self.Viajes():
-            if (self._Registro[-1])._Monto != self._CostoTransbordo and (self._Registro[-1])._Monto != self._CostoMedioTransbordoTransbordo:
-                if (self._Registro[-1])._Linea != colectivo._Linea:
-                    if (self._Registro[-1])._Horario[0:9] == horario[0:9]:
-                        
-                        HoraVieja=int((self._Registro[-1])._Horario[11:12]) + 1
-                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
-                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
+            if (self._Registro[-1])._Monto != self._CostoTransbordo and (self._Registro[-1])._Monto != self._CostoMedioTransbordo:
+                if (self._Registro[-1])._Colectivo._Linea != colectivo._Linea:
+                    if (self._Registro[-1])._Horario[0:10] == horario[0:10]:
+                        HoraVieja=int((self._Registro[-1])._Horario[11:13]) + 1
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:16])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:19])
                       
-                        HoraNueva=int(horario[11:12])
-                        MinutoNuevo=int(horario[14:15])
-                        SegundoNuevo=int(horario[17:18])
+                        HoraNueva=int(horario[11:13])
+                        MinutoNuevo=int(horario[14:16])
+                        SegundoNuevo=int(horario[17:19])
                         
                         if HoraNueva > HoraVieja:
                             return self.PagarConCosto(colectivo, horario, self._CostoComun)
@@ -162,15 +159,15 @@ class TarjetaMedioBoleto (Tarjeta) :
                         if SegundoNuevo <= SegundoViejo:
                             return self.PagarConCosto(colectivo, horario, self._CostoTransbordo)                                
                         
-                    
-                    if int((self._Registro[-1])._Horario[9:10]) == 23 and TestearFecha((self._Registro[-1])._Horario,horario):
+                    HoraVieja=int((self._Registro[-1])._Horario[11:13])
+                    if HoraVieja == 23 and self.TestearFecha((self._Registro[-1])._Horario,horario):
                         HoraVieja= 0
-                        MinutoViejo=int((self._Registro[-1])._Horario[14:15])
-                        SegundoViejo=int((self._Registro[-1])._Horario[17:18])
+                        MinutoViejo=int((self._Registro[-1])._Horario[14:16])
+                        SegundoViejo=int((self._Registro[-1])._Horario[17:19])
                       
-                        HoraNueva=int(horario[11:12])
-                        MinutoNuevo=int(horario[14:15])
-                        SegundoNuevo=int(horario[17:18])
+                        HoraNueva=int(horario[11:13])
+                        MinutoNuevo=int(horario[14:16])
+                        SegundoNuevo=int(horario[17:19])
                         
                         if HoraNueva > HoraVieja:
                             return self.PagarConCosto(colectivo, horario, self._CostoComun)
@@ -191,7 +188,7 @@ class TarjetaMedioBoleto (Tarjeta) :
 
     
     def PagarConCosto (self, colectivo, horario, costo):
-        if int(horario[11:12]) >= 0 and int(horario[11:12]) < 6:
+        if int(horario[11:13]) >= 0 and int(horario[11:13]) < 6:
             if costo == self._CostoComun:
                 costo = self._CostoMedioComun
             else:
@@ -201,10 +198,8 @@ class TarjetaMedioBoleto (Tarjeta) :
         if self._Saldo > costo:
             self._Saldo = self._Saldo - costo
             self._Registro.append(Viaje(colectivo, horario, costo))
-            print("Pasaste\n")
             return True
         else:
-            print("No Pasaste\n")
             return False
 
 
@@ -222,14 +217,4 @@ class Viaje:
     def __init__ (self, colectivo, horario, monto):
         self._Colectivo = colectivo
         self._Horario = horario
-        self._Monto = monto       
-        
-
-
-
-
-cole = Colectivo("Semtur", 153, 1)
-tarj = Tarjeta()
-tarj.Recarga(12)
-tarj.PagarBoleto(cole,"01/01/2015 10:00:01")
-tarj.PagarBoleto(cole,"01/01/2015 10:15:59")
+        self._Monto = monto
