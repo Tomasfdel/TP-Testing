@@ -71,5 +71,5 @@ def test5():
 	assert Lista[0]._Horario == "09/12/2014 10:45:00"
 	assert Lista[0]._Monto == 5.75
 	assert Lista[1]._Colectivo == bondi52
-	assert Lista[1]._Horario == "09/12/2014 12:15:00"
+	assert Lista[1]._Horario == "09/12/2014 11:15:00"
 	assert Lista[1]._Monto == 1.90
