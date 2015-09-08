@@ -1,3 +1,5 @@
+import math
+
 class Tarjeta:
     
     def __init__ (self):
@@ -78,7 +80,7 @@ class Tarjeta:
                 
     def PagarConCosto (self, colectivo, horario, costo):
         if self._Saldo > costo:
-            self._Saldo = self._Saldo - costo
+            self._Saldo = round (self._Saldo - costo, 2)
             (self._Registro).append(Viaje(colectivo, horario, costo))
             return True
         else:
@@ -196,7 +198,7 @@ class TarjetaMedioBoleto (Tarjeta) :
             
         
         if self._Saldo > costo:
-            self._Saldo = self._Saldo - costo
+            self._Saldo = round (self._Saldo - costo, 2)
             self._Registro.append(Viaje(colectivo, horario, costo))
             return True
         else:
