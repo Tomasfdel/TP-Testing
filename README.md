@@ -1,3 +1,3 @@
 # TP-Testing
+<img src = "https://travis-ci.org/Tomasfdel/TP-Testing.svg?branch=master">
 
-https://travis-ci.org/Tomasfdel/TP-Testing.svg?branch=master
